@@ -43,8 +43,27 @@ class TasksController {
 async checkstatus(req, res) { 
     const { id } = req.params
 
-    const [task] = await knex('tasks').where({id})
-    const status = task.status
+    const task = await knex('tasks').where({id});
+    
+    
+
+    if(!task) {
+        return res.status(400).json({error: 'Task not found'})
+
+    }
+        const [{status}] = task
+        let updateStatus = status
+
+        if(status === 0) {
+            updateStatus = 1
+        }
+        else {
+            updateStatus = 0
+        }
+        
+        await knex('tasks').where({id}).update({
+            status: updateStatus
+        })
     return res.status(200).json(status)
 }
 }

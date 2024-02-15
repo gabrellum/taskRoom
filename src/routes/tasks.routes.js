@@ -9,7 +9,7 @@ tasksRouter.post('/:user_id', tasksController.create)
 tasksRouter.get('/', tasksController.listTasks)
 tasksRouter.delete('/:id', tasksController.deleteTasks)
 tasksRouter.put('/:id', tasksController.updateTasks)
-tasksRouter.put('/:id', tasksController.checkstatus)
+tasksRouter.put('/:id/done', tasksController.checkstatus)
 
 module.exports = tasksRouter
 
