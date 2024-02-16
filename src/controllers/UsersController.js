@@ -1,14 +1,17 @@
 const knex = require('../database/knex');
+const bcrypt = require('bcryptjs')
 
 class UsersController {
 
     async create(req, res) {
         const { name, email, password } = req.body
         
+        const hashedPassword = await bcrypt.hash(password, 8)
+
         const [users] = await knex('users').insert({
             name,
             email,
-            password
+            password: hashedPassword
         })
 
         return res.json(users[0])
